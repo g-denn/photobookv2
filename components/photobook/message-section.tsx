@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart } from "lucide-react"
+import { Heart, BookOpen } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,10 +14,14 @@ export function MessageSection() {
   const card2Ref = useRef<HTMLDivElement>(null)
   const heartRef = useRef<HTMLDivElement>(null)
   const heart2Ref = useRef<HTMLDivElement>(null)
+  const card3Ref = useRef<HTMLDivElement>(null)
+  const heart3Ref = useRef<HTMLDivElement>(null)
   const fromRef = useRef<HTMLParagraphElement>(null)
   const from2Ref = useRef<HTMLParagraphElement>(null)
+  const from3Ref = useRef<HTMLParagraphElement>(null)
   const messageRef = useRef<HTMLParagraphElement>(null)
   const message2Ref = useRef<HTMLParagraphElement>(null)
+  const message3Ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -43,8 +47,19 @@ export function MessageSection() {
         }
       )
 
+      // Card 3 entrance
+      gsap.fromTo(
+        card3Ref.current,
+        { opacity: 0, y: 100, scale: 0.8, rotateX: 15 },
+        {
+          opacity: 1, y: 0, scale: 1, rotateX: 0,
+          duration: 1.2, ease: "power3.out", delay: 0.4,
+          scrollTrigger: { trigger: card3Ref.current, start: "top 85%", toggleActions: "play none none reverse" },
+        }
+      )
+
       // Heart animations
-      ;[{ h: heartRef, c: cardRef }, { h: heart2Ref, c: card2Ref }].forEach(({ h, c }, i) => {
+      ;[{ h: heartRef, c: cardRef }, { h: heart2Ref, c: card2Ref }, { h: heart3Ref, c: card3Ref }].forEach(({ h, c }, i) => {
         gsap.fromTo(
           h.current,
           { opacity: 0, scale: 0, rotation: -180 },
@@ -66,6 +81,10 @@ export function MessageSection() {
         opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.7,
         scrollTrigger: { trigger: card2Ref.current, start: "top 80%", toggleActions: "play none none reverse" },
       })
+      gsap.fromTo(from3Ref.current, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.9,
+        scrollTrigger: { trigger: card3Ref.current, start: "top 80%", toggleActions: "play none none reverse" },
+      })
 
       // Messages
       gsap.fromTo(messageRef.current, { opacity: 0, y: 30 }, {
@@ -76,6 +95,10 @@ export function MessageSection() {
         opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.9,
         scrollTrigger: { trigger: card2Ref.current, start: "top 80%", toggleActions: "play none none reverse" },
       })
+      gsap.fromTo(message3Ref.current, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 1.1,
+        scrollTrigger: { trigger: card3Ref.current, start: "top 80%", toggleActions: "play none none reverse" },
+      })
     }, sectionRef)
 
     return () => ctx.revert()
@@ -84,7 +107,7 @@ export function MessageSection() {
   return (
     <section ref={sectionRef} className="bg-card py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* E-Va's card */}
           <div
             ref={cardRef}
@@ -143,6 +166,43 @@ export function MessageSection() {
                 <Heart className="h-4 w-4 fill-red-400 text-red-400" />
                 <Heart className="h-5 w-5 fill-red-500 text-red-500" />
                 <Heart className="h-4 w-4 fill-red-400 text-red-400" />
+              </div>
+            </div>
+          </div>
+          {/* Chris's card */}
+          <div
+            ref={card3Ref}
+            className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-background p-6 shadow-lg md:col-span-2 md:p-10 lg:col-span-1"
+            style={{ perspective: "1000px" }}
+          >
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
+              <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-amber-400/5 blur-3xl" />
+            </div>
+            <div className="relative z-10 text-center">
+              <div ref={heart3Ref} className="mb-8 flex justify-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-500/10">
+                  <BookOpen className="h-10 w-10 text-amber-500" />
+                </div>
+              </div>
+              <p ref={from3Ref} className="mb-6 text-lg font-semibold uppercase tracking-widest text-amber-500">
+                A Blessing from Chris
+              </p>
+              <div ref={message3Ref} className="space-y-3 text-xl font-medium leading-relaxed text-foreground md:text-2xl">
+                <p className="italic">
+                  &ldquo;May the LORD bless you and protect you.<br />
+                  May the LORD smile on you and be gracious to you.<br />
+                  May the LORD show you his favor and give you his peace.&rdquo;
+                </p>
+                <p className="text-base text-muted-foreground">— Numbers 6:24–26</p>
+                <p className="mt-4 text-lg">
+                  I thank the Lord for being good to you &amp; Thank you for everything 🥰
+                </p>
+              </div>
+              <div className="mt-10 flex justify-center gap-2">
+                <Heart className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <Heart className="h-5 w-5 fill-amber-500 text-amber-500" />
+                <Heart className="h-4 w-4 fill-amber-400 text-amber-400" />
               </div>
             </div>
           </div>

@@ -125,8 +125,7 @@ export function HeroSection() {
           className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-7xl lg:text-8xl"
         >
           <span className="block">Happy Wedding Anniversary</span>
-          <span className="block">to</span>
-          <span className="block">Gong Gong &amp; Popo</span>
+          <span className="block whitespace-nowrap">Gong&nbsp;Gong &amp; Popo</span>
         </h1>
 
         <p

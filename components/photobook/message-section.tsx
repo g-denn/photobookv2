@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, BookOpen } from "lucide-react"
+import { Heart } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -172,24 +172,24 @@ export function MessageSection() {
           {/* Chris's card */}
           <div
             ref={card3Ref}
-            className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-background p-6 shadow-lg md:col-span-2 md:p-10 lg:col-span-1"
+            className="relative overflow-hidden rounded-2xl border border-border/50 bg-background p-6 shadow-lg md:p-10"
             style={{ perspective: "1000px" }}
           >
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
-              <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-amber-400/5 blur-3xl" />
+              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-red-500/5 blur-3xl" />
+              <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
             </div>
             <div className="relative z-10 text-center">
               <div ref={heart3Ref} className="mb-8 flex justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-500/10">
-                  <BookOpen className="h-10 w-10 text-amber-500" />
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-500/10">
+                  <Heart className="h-10 w-10 fill-red-500 text-red-500" />
                 </div>
               </div>
-              <p ref={from3Ref} className="mb-6 text-lg font-semibold uppercase tracking-widest text-amber-500">
-                A Blessing from Chris
+              <p ref={from3Ref} className="mb-6 text-lg font-semibold uppercase tracking-widest text-primary">
+                A Message from Chris
               </p>
               <div ref={message3Ref} className="space-y-3 text-xl font-medium leading-relaxed text-foreground md:text-2xl">
-                <p className="italic">
+                <p>
                   &ldquo;May the LORD bless you and protect you.<br />
                   May the LORD smile on you and be gracious to you.<br />
                   May the LORD show you his favor and give you his peace.&rdquo;
@@ -200,9 +200,9 @@ export function MessageSection() {
                 </p>
               </div>
               <div className="mt-10 flex justify-center gap-2">
-                <Heart className="h-4 w-4 fill-amber-400 text-amber-400" />
-                <Heart className="h-5 w-5 fill-amber-500 text-amber-500" />
-                <Heart className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <Heart className="h-4 w-4 fill-red-400 text-red-400" />
+                <Heart className="h-5 w-5 fill-red-500 text-red-500" />
+                <Heart className="h-4 w-4 fill-red-400 text-red-400" />
               </div>
             </div>
           </div>

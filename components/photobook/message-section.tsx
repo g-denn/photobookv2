@@ -105,9 +105,7 @@ export function MessageSection() {
                 A Message from E-Va
               </p>
               <p ref={messageRef} className="text-xl font-medium leading-relaxed text-foreground md:text-2xl">
-                <span className="text-pretty">
-                  Happy anniversary Popo and Gong Gong! Wishing you both joy and happiness. May your love grow more and more each passing year!
-                </span>
+                Happy anniversary <span className="whitespace-nowrap">Popo and Gong&nbsp;Gong!</span> Wishing you both joy and happiness. May your love grow more and more each passing year!
               </p>
               <div className="mt-10 flex justify-center gap-2">
                 <Heart className="h-4 w-4 fill-red-400 text-red-400" />
@@ -136,11 +134,11 @@ export function MessageSection() {
               <p ref={from2Ref} className="mb-6 text-lg font-semibold uppercase tracking-widest text-primary">
                 A Message from the Family
               </p>
-              <p ref={message2Ref} className="text-xl font-medium leading-relaxed text-foreground md:text-2xl">
-                <span className="text-pretty">
-                  Happy Anniversary Popo &amp; Gong Gong ❤️ Thank you for showing our whole family what love, happiness, and commitment look like over a lifetime. The way you have supported each other through the years is something we all admire and learn from. Your love built the family we are blessed to be part of today.
-                </span>
-              </p>
+              <div ref={message2Ref} className="space-y-4 text-xl font-medium leading-relaxed text-foreground md:text-2xl">
+                <p>Happy Anniversary <span className="whitespace-nowrap">Popo &amp; Gong&nbsp;Gong</span> ❤️</p>
+                <p>Thank you for showing our whole family what love, happiness, and commitment look like over a lifetime.</p>
+                <p>The way you have supported each other through the years is something we all admire and learn from. Your love built the family we are blessed to be part of today.</p>
+              </div>
               <div className="mt-10 flex justify-center gap-2">
                 <Heart className="h-4 w-4 fill-red-400 text-red-400" />
                 <Heart className="h-5 w-5 fill-red-500 text-red-500" />

@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
+import { ArrowLeft, X } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,7 +20,7 @@ const photos: PhotoItem[] = [
   { id: 1, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.46%20%282%29-qrW2gxkgrhAgyuQpTBBc8B7IR4FKyI.jpeg", caption: "Cheers to love", size: "large" },
   { id: 2, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.47%20%281%29-nbxUy67tzaW1PNI0Njb7Ixv6yPJzFj.jpeg", caption: "Celebrating together", size: "small" },
   { id: 3, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.38-yzBdpaTz7prz9xMmZEPtaa6L411Aef.jpeg", caption: "Chinese New Year", size: "small" },
-  { id: 4, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.46%20%281%29-pKpRdZKRwo5eNotyTIZ7VIfKkxL47D.jpeg", caption: "Lantern Festival", size: "medium" },
+  { id: 4, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.46%20%281%29-pKpRdZKRwo5eNotyTIZ7VIfKkxL47D.jpeg", caption: "Young Couple", size: "medium" },
   { id: 5, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.44-qVnceHFZrRgXhxNhPqcVWisikcvkDx.jpeg", caption: "Under the blossoms", size: "large" },
   { id: 6, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.33-v8fwIvFaKAzgkCR4urfWpHkxoRuJqh.jpeg", caption: "Christmas joy", size: "small" },
   { id: 7, src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-03-13%20at%2020.37.48%20%281%29-796p2F4gegim8ibgFqRsQd7ATfrQpq.jpeg", caption: "Tropical getaway", size: "small" },
@@ -42,10 +43,25 @@ export function PhotoGallery() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null)
+
+  const closeModal = useCallback(() => setSelectedPhoto(null), [])
+
+  // Close on Escape key
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeModal() }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [closeModal])
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = selectedPhoto ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
+  }, [selectedPhoto])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading reveal
       gsap.fromTo(
         headingRef.current,
         { opacity: 0, y: 60 },
@@ -62,18 +78,12 @@ export function PhotoGallery() {
         }
       )
 
-      // Gallery items with dramatic reveal
       const items = galleryRef.current?.querySelectorAll(".gallery-item")
       if (items) {
         items.forEach((item, index) => {
           gsap.fromTo(
             item,
-            {
-              opacity: 0,
-              y: 100,
-              scale: 0.8,
-              rotateX: 15,
-            },
+            { opacity: 0, y: 100, scale: 0.8, rotateX: 15 },
             {
               opacity: 1,
               y: 0,
@@ -90,26 +100,13 @@ export function PhotoGallery() {
             }
           )
 
-          // Hover animation setup
           const card = item.querySelector(".photo-card")
           if (card) {
             item.addEventListener("mouseenter", () => {
-              gsap.to(card, {
-                scale: 1.03,
-                y: -10,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
-                duration: 0.4,
-                ease: "power2.out",
-              })
+              gsap.to(card, { scale: 1.03, y: -10, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)", duration: 0.4, ease: "power2.out" })
             })
             item.addEventListener("mouseleave", () => {
-              gsap.to(card, {
-                scale: 1,
-                y: 0,
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                duration: 0.4,
-                ease: "power2.out",
-              })
+              gsap.to(card, { scale: 1, y: 0, boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)", duration: 0.4, ease: "power2.out" })
             })
           }
         })
@@ -139,7 +136,7 @@ export function PhotoGallery() {
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             <span className="text-pretty">
-              Each photograph tells a chapter of Gong Gong & Popo's beautiful journey together
+              Each photograph tells a chapter of Gong Gong &amp; Popo&apos;s beautiful journey together
             </span>
           </p>
         </div>
@@ -154,7 +151,10 @@ export function PhotoGallery() {
               className={`gallery-item ${getSizeClasses(photo.size)}`}
               style={{ perspective: "1000px" }}
             >
-              <Card className="photo-card group relative h-full w-full cursor-pointer overflow-hidden border-border/30 transition-colors">
+              <Card
+                className="photo-card group relative h-full w-full cursor-pointer overflow-hidden border-border/30 transition-colors"
+                onClick={() => setSelectedPhoto(photo)}
+              >
                 <Image
                   src={photo.src}
                   alt={photo.caption}
@@ -163,7 +163,7 @@ export function PhotoGallery() {
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
 
-                {/* Caption overlay - always visible on mobile, hover on desktop */}
+                {/* Caption overlay */}
                 <div className="absolute inset-x-0 bottom-0 translate-y-0 bg-gradient-to-t from-foreground/80 via-foreground/40 to-transparent p-3 md:translate-y-full md:p-4 md:transition-transform md:duration-300 md:group-hover:translate-y-0">
                   <p className="text-xs font-medium text-background md:text-sm">
                     {photo.caption}
@@ -175,11 +175,58 @@ export function PhotoGallery() {
         </div>
 
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          <span className="hidden md:inline">Hover over</span>
+          <span className="hidden md:inline">Click</span>
           <span className="md:hidden">Tap</span>
-          {" "}photos to see their captions
+          {" "}any photo to view it larger
         </p>
       </div>
+
+      {/* Modal */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          onClick={closeModal}
+        >
+          {/* Back / close button */}
+          <button
+            onClick={closeModal}
+            className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:left-6 md:top-6"
+            aria-label="Close photo"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back</span>
+          </button>
+
+          {/* X button (top-right) */}
+          <button
+            onClick={closeModal}
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:right-6 md:top-6"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          {/* Image container — stop propagation so clicking image doesn't close */}
+          <div
+            className="relative max-h-[85vh] max-w-4xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative w-full" style={{ paddingBottom: "75%" }}>
+              <Image
+                src={selectedPhoto.src}
+                alt={selectedPhoto.caption}
+                fill
+                className="rounded-lg object-contain"
+                sizes="(max-width: 768px) 95vw, 80vw"
+                priority
+              />
+            </div>
+            <p className="mt-3 text-center text-sm font-medium text-white/80">
+              {selectedPhoto.caption}
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

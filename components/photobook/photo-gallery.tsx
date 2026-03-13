@@ -81,47 +81,32 @@ export function PhotoGallery() {
       const items = galleryRef.current?.querySelectorAll(".gallery-item")
       if (items) {
         items.forEach((item, index) => {
-          // Scroll-in: bloom from blurred grayscale — stays visible once played
           gsap.fromTo(
             item,
-            { opacity: 0, scale: 0.78, filter: "blur(10px) saturate(0)" },
+            { opacity: 0, y: 100, scale: 0.8, rotateX: 15 },
             {
               opacity: 1,
+              y: 0,
               scale: 1,
-              filter: "blur(0px) saturate(1)",
-              duration: 1.1,
+              rotateX: 0,
+              duration: 1,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: item,
                 start: "top 90%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
-              delay: (index % 4) * 0.08,
+              delay: (index % 3) * 0.1,
             }
           )
 
-          // Hover: warm glow + tilt
           const card = item.querySelector(".photo-card")
           if (card) {
             item.addEventListener("mouseenter", () => {
-              gsap.to(card, {
-                scale: 1.06,
-                rotation: 1.5,
-                filter: "brightness(1.15) saturate(1.35)",
-                boxShadow: "0 30px 60px -10px rgba(0, 0, 0, 0.25)",
-                duration: 0.35,
-                ease: "power2.out",
-              })
+              gsap.to(card, { scale: 1.03, y: -10, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)", duration: 0.4, ease: "power2.out" })
             })
             item.addEventListener("mouseleave", () => {
-              gsap.to(card, {
-                scale: 1,
-                rotation: 0,
-                filter: "brightness(1) saturate(1)",
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                duration: 0.4,
-                ease: "power2.out",
-              })
+              gsap.to(card, { scale: 1, y: 0, boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)", duration: 0.4, ease: "power2.out" })
             })
           }
         })

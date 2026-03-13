@@ -124,7 +124,7 @@ export function PhotoGallery() {
       case "large":
         return "col-span-2 row-span-2"
       case "medium":
-        return "col-span-1 row-span-2"
+        return "col-span-1 row-span-1 md:row-span-2"
       case "small":
         return "col-span-1 row-span-1"
     }

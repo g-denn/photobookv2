@@ -124,7 +124,9 @@ export function HeroSection() {
           ref={titleRef}
           className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-7xl lg:text-8xl"
         >
-          <span className="text-balance">Happy Wedding Anniversary to Gong Gong &amp; Popo</span>
+          <span className="block">Happy Wedding Anniversary</span>
+          <span className="block">to</span>
+          <span className="block">Gong Gong &amp; Popo</span>
         </h1>
 
         <p

@@ -134,7 +134,7 @@ export function MessageSection() {
                 </div>
               </div>
               <p ref={from2Ref} className="mb-6 text-lg font-semibold uppercase tracking-widest text-primary">
-                A Message from the Family
+                A Message from G-Den
               </p>
               <p ref={message2Ref} className="text-xl font-medium leading-relaxed text-foreground md:text-2xl">
                 <span className="text-pretty">
